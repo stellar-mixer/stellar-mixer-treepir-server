@@ -1,8 +1,8 @@
 use anyhow::{bail, Context, Result};
 use rocksdb::{Options, WriteBatch, DB};
 use serde::{Deserialize, Serialize};
-use std::path::{Path, PathBuf};
-use treepir::{Hash, LevelMerkleTree};
+use std::path::PathBuf;
+use treepir_core::{Hash, LevelMerkleTree};
 
 const META_KEY: &[u8] = b"meta";
 
@@ -93,9 +93,6 @@ impl PersistentTreeStore {
         Ok(store)
     }
 
-    pub fn metadata(&self) -> &TreePirPersistentMetadata {
-        &self.metadata
-    }
 
     pub fn last_indexed_ledger(&self) -> u64 {
         self.metadata.last_indexed_ledger

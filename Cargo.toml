@@ -1,8 +1,16 @@
 [package]
-name = "treepir-server"
+name = "stellar-mixer-treepir-server"
 version = "0.1.0"
 edition = "2021"
 publish = false
+
+[lib]
+name = "stellar_mixer_treepir_server"
+path = "src/lib.rs"
+
+[[bin]]
+name = "stellar-mixer-treepir-server"
+path = "src/main.rs"
 
 [dependencies]
 stellar-strkey = "0.0.18"
@@ -13,7 +21,8 @@ stellar-rpc-client = "27"
 stellar-xdr = { version = "27", features = ["base64", "serde", "serde_json"] }
 dotenvy = "0.15"
 anyhow = "1"
-treepir = { path = "../treepir" }
+
+treepir_core = { package = "treepir-core", git = "https://github.com/stellar-mixer/treepir-core.git", branch = "main" }
 
 axum = "0.8"
 tokio = { version = "1", features = ["macros", "rt-multi-thread", "net", "signal", "fs"] }

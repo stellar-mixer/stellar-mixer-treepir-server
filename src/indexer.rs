@@ -8,7 +8,7 @@ use std::sync::Arc;
 use tokio::sync::RwLock;
 use tokio::time::{sleep, Duration};
 use tracing::{info, warn};
-use treepir::{Hash, TreePirServer};
+use treepir_core::{Hash, TreePirServer};
 
 use stellar_rpc_client::{
     Client as StellarRpcClient, Event as StellarEvent, EventStart, EventType,
@@ -40,7 +40,6 @@ struct StellarEventClient {
 struct LocalLedgerEvent {
     id: String,
     ledger: u32,
-    order: u32,
     parsed: MixerTreeEvent,
 }
 
@@ -792,12 +791,9 @@ fn maybe_push_contract_event(
         return Ok(());
     };
 
-    let order = out.len() as u32;
-
     out.push(LocalLedgerEvent {
         id: event_id,
         ledger,
-        order,
         parsed,
     });
 

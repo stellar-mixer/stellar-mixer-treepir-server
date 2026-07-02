@@ -11,13 +11,13 @@ use serde::{Deserialize, Serialize};
 use std::{net::SocketAddr, sync::Arc};
 use thiserror::Error;
 use tokio::sync::RwLock;
-use treepir::{
+use treepir_core::{
     inspire_packing_params_fast, InspirePirError, SeededClientQuery, ServerCrs, ServerResponse,
     TreePirLayout, TreePirLevelResponse, TreePirOwnedLevelRequest, TreePirOwnedPathRequest,
     TreePirPathResponse, TreePirServer as CoreTreePirServer, INSPIRE_ENTRY_SIZE,
 };
 
-pub const SERVER_DEPTH: usize = 35;
+pub const SERVER_DEPTH: usize = 45;
 
 pub type TreePirServerCore = CoreTreePirServer<SERVER_DEPTH>;
 pub type SharedState = Arc<RwLock<TreePirServerCore>>;
@@ -196,7 +196,7 @@ pub async fn run(
 async fn health() -> Json<HealthResponse> {
     Json(HealthResponse {
         ok: true,
-        service: "treepir-server",
+        service: "stellar-mixer-treepir-server",
     })
 }
 

@@ -13,8 +13,8 @@ use serde::Serialize;
 use std::sync::Arc;
 use tokio::sync::RwLock;
 use tracing::{error, info};
-use treepir::TreePirServer as CoreTreePirServer;
-use treepir_server::{app as treepir_api, SERVER_DEPTH};
+use treepir_core::TreePirServer as CoreTreePirServer;
+use stellar_mixer_treepir_server::{app as treepir_api, SERVER_DEPTH};
 
 #[tokio::main]
 async fn main() -> Result<()> {
@@ -24,13 +24,13 @@ async fn main() -> Result<()> {
         .with_env_filter(
             std::env::var("RUST_LOG")
                 .or_else(|_| std::env::var("TREEPIR_LOG"))
-                .unwrap_or_else(|_| "treepir_server=info,info".to_string()),
+                .unwrap_or_else(|_| "stellar_mixer_treepir_server=info,info".to_string()),
         )
         .init();
 
     let config = ServerConfig::from_env()?;
 
-    info!(?config, "starting treepir-server");
+    info!(?config, "starting stellar-mixer-treepir-server");
 
     let store = PersistentTreeStore::load_or_create(
         config.db_path.clone(),
@@ -64,7 +64,7 @@ async fn main() -> Result<()> {
     );
 
     let listener = tokio::net::TcpListener::bind(config.bind_addr).await?;
-    info!(addr = %config.bind_addr, "treepir-server is listening");
+    info!(addr = %config.bind_addr, "stellar-mixer-treepir-server is listening");
 
     let server = axum::serve(listener, app).with_graceful_shutdown(shutdown_signal());
 

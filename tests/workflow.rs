@@ -10,12 +10,12 @@ use std::sync::Arc;
 use std::time::{Duration, Instant};
 use tokio::sync::RwLock;
 use tower::ServiceExt;
-use treepir::{
+use treepir_core::{
     crs_hash_hex, setup_inspire_client_material_default, InspireClientMaterial, LevelMerkleTree,
     NodeId, TreePirClient, TreePirServer as CoreTreePirServer,
 };
 
-use treepir_server::{
+use stellar_mixer_treepir_server::{
     app as server_app, encode_bincode_base64, encode_json_base64, LayoutDto, LevelQueryDto,
     ParamsResponse, PathQueryRequest, PathQueryResponse, RegisterClientRequest,
     RegisterClientResponse, SERVER_DEPTH,
@@ -168,7 +168,7 @@ async fn full_registered_client_http_workflow_does_not_expose_private_indices() 
             read_json(params_response),
         )
         .await;
-    assert_eq!(params.entry_size, treepir::INSPIRE_ENTRY_SIZE);
+    assert_eq!(params.entry_size, treepir_core::INSPIRE_ENTRY_SIZE);
 
     let (material, crs_hash) =
         timings.measure("generate client material + CRS hash", new_client_material);
