@@ -271,11 +271,11 @@ For production deployments, operators may keep the server on port `3000` interna
 
 Build:
 
-    cargo build
+    cargo build --release
 
 Run:
 
-    cargo run
+    cargo run --release
 
 Check health:
 
@@ -287,7 +287,7 @@ Check readiness:
 
 Run tests:
 
-    cargo test
+    cargo test --release
 
 ## Relationship to TreePIR Core
 
